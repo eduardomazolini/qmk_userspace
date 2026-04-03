@@ -7,21 +7,23 @@ qmk flash -kb avalanche/v4 -km default
 */
 
 #include QMK_KEYBOARD_H
+
 // ──────────────────────────────────────────────
 // LED config — gerado a partir do led_map do keyboard.json
 // ──────────────────────────────────────────────
 led_config_t g_led_config = {
-    { // Matrix map: [row][col] → índice do LED físico (255 = sem LED)
-        {  28,  30,  31,  29,  24,  25, 255 },
-        {  23,  18,  14,  15,  16,  17, 255 },
-        {   7,   8,   4,   3,   2,   1,  41 },
-        {  39,  40,  45,  44,  43,  42,  36 },
-        {   6, 255,  46,  55,  56,  57,  58 },
-        {  19,  20,  21,  22,  27,  26, 255 },
-        {   5,  13,   9,  10,  11,  12, 255 },
-        {  37,  35,  33,  32,  34,   0,  47 },
-        {  51,  52,  53,  54,  50,  49,  48 },
-        {  38, 255,  63,  59,  60,  61,  62 },
+    {
+        {27, 26,  18, 17,  8,  7, 255},
+        {28, 25,  19, 16,  9,  6, 255},
+        {29, 24,  20, 15, 10,  5,  2},
+        {30, 23,  21, 14, 11,  4,  3},
+        {31, 255, 22, 13, 12,  0,  1},
+
+        {59,  58, 50, 49, 40, 39, 255},
+        {60,  57, 51, 48, 41, 38, 255},
+        {61,  56, 52, 47, 42, 37,  34},
+        {62,  55, 53, 46, 43, 36,  35},
+        {63, 255, 54, 45, 44, 32,  33}
     },
     { // Posições físicas: {x, y} — x: 0-224, y: 0-64
         {149, 30}, // LED  0
@@ -90,10 +92,18 @@ led_config_t g_led_config = {
         {182, 58}, // LED 63
     },
     { // Flags: 4 = LED_FLAG_KEYLIGHT (per-key)
-        4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-        4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-        4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-        4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+      //1  2  3  4  5  6  7
+        4, 4, 4, 4, 4, 4,
+        4, 4, 4, 4, 4, 4,
+        4, 4, 4, 4, 4, 4, 4, 
+        4, 4, 4, 4, 4, 4, 4, 
+        4,    4, 4, 4, 4, 4,
+
+           4, 4, 4, 4, 4, 4,
+           4, 4, 4, 4, 4, 4,
+        4, 4, 4, 4, 4, 4, 4,
+        4, 4, 4, 4, 4, 4, 4,
+        4, 4, 4, 4, 4,    4,
     }
 };
 
@@ -113,6 +123,12 @@ enum layer {
 #define RFN_3   RSFT_T(KC_MINS)
 #define EN_LALT LALT_T(KC_ENT)
 #define EN_RALT RALT_T(KC_ENT)
+
+#define DESKTOP_1 LCTL(KC_F1)
+#define DESKTOP_2 LCTL(KC_F2)
+#define DESKTOP_3 LCTL(KC_F3)
+
+#define MUTE_MIC LSFT(LCTL(LALT(KC_ESCAPE)))
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [LAYER_0] = LAYOUT(
@@ -138,6 +154,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 };
 
+#if defined(ENCODER_MAP_ENABLE)
+const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
+    [0] =   { ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(KC_PGUP, KC_PGDN)  },
+    [1] =   { ENCODER_CCW_CW(RGB_HUD, RGB_HUI),           ENCODER_CCW_CW(RGB_SAD, RGB_SAI)  },
+    [2] =   { ENCODER_CCW_CW(RGB_VAD, RGB_VAI),           ENCODER_CCW_CW(RGB_SPD, RGB_SPI)  },
+    //                  Encoder 1                                     Encoder 2
+};
+#endif
+
 // ──────────────────────────────────────────────
 // RGB Matrix — indicadores por layer e CapsLock
 // ──────────────────────────────────────────────
@@ -145,7 +170,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // Encontra o LED físico correspondente a uma posição [row][col] da matrix
 // Retorna 255 se não houver LED nessa posição
 static uint8_t led_for_key(uint8_t row, uint8_t col) {
-    return g_led_config.matrix_co[row][col];
+    uint8_t led = g_led_config.matrix_co[row][col];
+    //imprime teste
+    char buf[16];
+    snprintf(buf, sizeof(buf), "%d, %d, %d\n", row, col, led);
+    oled_write(buf, false);
+    return led;
 }
 
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
@@ -169,26 +199,6 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
         }
     }
 
-    // Indicador de layer
-    uint8_t layer = get_highest_layer(layer_state);
-    if (layer == LAYER_0) return false;
-
-    RGB color = (layer == LAYER_1) ? (RGB){RGB_RED} : (RGB){RGB_BLUE};
-
-    for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
-        for (uint8_t col = 0; col < MATRIX_COLS; col++) {
-            uint16_t kc = keymap_key_to_keycode(layer, (keypos_t){col, row});
-            if (kc != KC_TRNS && kc != KC_NO) {
-                uint8_t led = led_for_key(row, col);
-                if (led != 255 && led >= led_min && led < led_max) {
-                    // Só pinta se não está pressionada (preserva o branco)
-                    if (!matrix_is_on(row, col)) {
-                        rgb_matrix_set_color(led, color.r, color.g, color.b);
-                    }
-                }
-            }
-        }
-    }
     return false;
 }
 
