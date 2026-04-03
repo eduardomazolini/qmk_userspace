@@ -99,11 +99,11 @@ led_config_t g_led_config = {
         4, 4, 4, 4, 4, 4, 4, 
         4,    4, 4, 4, 4, 4,
 
-           4, 4, 4, 4, 4, 4,
-           4, 4, 4, 4, 4, 4,
+        4, 4, 4, 4, 4, 4,
+        4, 4, 4, 4, 4, 4,
         4, 4, 4, 4, 4, 4, 4,
         4, 4, 4, 4, 4, 4, 4,
-        4, 4, 4, 4, 4,    4,
+        4,    4, 4, 4, 4, 4,
     }
 };
 
@@ -194,6 +194,33 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
                 uint8_t led = led_for_key(row, col);
                 if (led != 255 && led >= led_min && led < led_max) {
                     rgb_matrix_set_color(led, RGB_WHITE);
+                }
+            }
+        }
+    }
+
+    // Indicador de layer
+    uint8_t layer = get_highest_layer(layer_state);
+    if (layer == LAYER_0) return false;
+
+    RGB color = (layer == LAYER_1) ? (RGB){RGB_GREEN} : (RGB){RGB_BLUE};
+
+    for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
+        for (uint8_t col = 0; col < MATRIX_COLS; col++) {
+            uint16_t kc = keymap_key_to_keycode(layer, (keypos_t){col, row});
+            if (kc != KC_TRNS && kc != KC_NO) {
+                uint8_t led = led_for_key(row, col);
+                if (led != 255 && led >= led_min && led < led_max) {
+                    // Só pinta se não está pressionada (preserva o branco)
+                    if (!matrix_is_on(row, col)) {
+
+                        //imprime teste
+                        char buf[16];
+                        snprintf(buf, sizeof(buf), "%d, %d, %d\n", row, col, led);
+                        oled_write(buf, false);
+
+                        rgb_matrix_set_color(led, color.r, color.g, color.b);
+                    }
                 }
             }
         }

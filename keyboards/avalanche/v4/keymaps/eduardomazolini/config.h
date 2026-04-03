@@ -19,3 +19,8 @@
 
 // Adicinei daqui pra baixo
 #define RGB_MATRIX_LED_COUNT 64
+#define RGB_MATRIX_SPLIT { 32, 32 }
+#define SPLIT_LAYER_STATE_ENABLE
+#define SPLIT_LED_STATE_ENABLE
+#define SPLIT_TRANSPORT_MIRROR
+#define SPLIT_MODS_ENABLE
