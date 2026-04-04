@@ -11,7 +11,8 @@ CONSOLE_ENABLE = no         # Console for debug
 COMMAND_ENABLE = no         # Commands for debug and configuration
 NKRO_ENABLE = yes           # Enable N-Key Rollover
 BACKLIGHT_ENABLE = no       # Enable keyboard backlight functionality
-RGBLIGHT_ENABLE = no        # Enable keyboard RGB underglow
+RGBLIGHT_ENABLE = no        # Enable keyboard RGB underglow 
+                            # usando Matrix tem que desabilitar
 AUDIO_ENABLE = no           # Audio output
 ENCODER_ENABLE = yes
 OLED_ENABLE = yes
@@ -23,17 +24,4 @@ CONVERT_TO = rp2040_ce
 #Eu adicionei daqui pra baixo
 RGB_MATRIX_ENABLE = yes
 RGB_MATRIX_DRIVER = ws2812
-
-
-#SPLIT_TRANSPORT_MIRROR = yes
-#SPLIT_LED_STATE_ENABLE = yes
-#SPLIT_LAYER_STATE_ENABLE = yes
-#SPLIT_MODS_ENABLE
-#SPLIT_WPM_ENABLE
-#SPLIT_OLED_ENABLE
-#SPLIT_ST7565_ENABLE
-#SPLIT_POINTING_ENABLE
-
-#SPLIT_LED_STATE_ENABLE
-#SPLIT_LAYER_STATE_ENABLE
-#SPLIT_TRANSPORT_MIRROR
+VIALRGB_ENABLE = yes
