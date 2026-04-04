@@ -93,7 +93,10 @@ led_config_t g_led_config = {
         {212, 40}, // LED 62
         {224, 28}, // LED 63
     },
-    { // Flags: 4 = LED_FLAG_KEYLIGHT (per-key)
+    { // Flags: 0x04 = LED_FLAG_KEYLIGHT (per-key)
+             // 0x08 = LED_FLAG_INDICATOR
+             // 0x02 = LED_FLAG_UNDERGLOW
+             // 0x01 = LED_FLAG_MODIFIER
         4, 4, 4, 4, 4, 4,
         4, 4, 4, 4, 4, 4,
         4, 4, 4, 4, 4, 4, 4, 
@@ -194,9 +197,9 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             if (matrix_is_on(row, col)) {
                 uint8_t led = led_for_key(row, col);
                 //imprime teste
-                char buf[16];
-                snprintf(buf, sizeof(buf), "%d, %d, %d\n", led_min, led_max, led);
-                oled_write(buf, false);
+            //    char buf[16];
+            //    snprintf(buf, sizeof(buf), "%d, %d, %d\n", led_min, led_max, led);
+            //    oled_write(buf, false);
                 if (led != 255 && led >= led_min && led < led_max) {
                     rgb_matrix_set_color(led, RGB_WHITE);
                 }

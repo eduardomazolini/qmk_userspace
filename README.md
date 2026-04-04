@@ -57,3 +57,75 @@ This can also be used to control which fork is used, though only upstream `qmk_f
 1. (First time only) `git submodule add https://github.com/qmk/qmk_firmware.git`
 1. (To update) `git submodule update --init --recursive`
 1. Commit your changes to your userspace repository
+
+# MEU AVALANCHE
+
+## rules.mk
+
+```
+RGB_MATRIX_ENABLE = yes
+RGB_MATRIX_DRIVER = ws2812
+VIALRGB_ENABLE = yes
+```
+
+## config.h
+
+```
+#define RGB_MATRIX_LED_COUNT 64 // informa o total de leds
+#define RGB_MATRIX_SPLIT { 32, 32 } // sem isso o segundo teclado não funciona.
+#define SPLIT_LAYER_STATE_ENABLE // para sinalizar layer alterado
+#define SPLIT_LED_STATE_ENABLE  // para sinalizar caps, num ...
+#define SPLIT_TRANSPORT_MIRROR
+#define SPLIT_MODS_ENABLE
+
+```
+
+## Mapa de Leds
+
+### LEDs
+
+```
+        {27, 26,  18, 17,  8,  7, 255},
+        {28, 25,  19, 16,  9,  6, 255},
+        {29, 24,  20, 15, 10,  5,  2},
+        {30, 23,  21, 14, 11,  4,  3},
+        {31, 255, 22, 13, 12,  0,  1},
+
+        {59,  58, 50, 49, 40, 39, 255},
+        {60,  57, 51, 48, 41, 38, 255},
+        {61,  56, 52, 47, 42, 37,  34},
+        {62,  55, 53, 46, 43, 36,  35},
+        {63, 255, 54, 45, 44, 32,  33}
+```
+
+### Coordenadas
+
+```
+y 0-64
+4, 4, 1, 0, 1, 3 ,xx
+16,16,13,12,13,15,xx
+28,28,25,24,15,27,54
+40,40,37,36,27,39,46
+28,xx,49,49,52,58,64
+
+x = 0 106
+12,24,36,48,60,72,XX
+12,24,36,48,60,72,XX
+12,24,36,48,60,72,106
+12,24,36,48,60,72,90
+00,xx,42,56,68,84,98
+
+x = 224 118
+
+212,200,188,176,164,152,xxx
+212,200,188,176,164,152,xxx 
+212,200,188,176,164,152,118
+212,200,188,176,164,152,134
+224,xxx,180,168,156,140,126
+```
+
+# TODO
+
+- Efeito "Direct Control" não funciona.
+- CAPS-LOCK INVERTE
+- acentos ficam em maiúscula
