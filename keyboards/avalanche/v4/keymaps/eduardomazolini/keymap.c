@@ -26,73 +26,74 @@ led_config_t g_led_config = {
         {63, 255, 54, 45, 44, 32,  33}
     },
     { // Posições físicas: {x, y} — x: 0-224, y: 0-64
-        {149, 30}, // LED  0
-        { 75, 30}, // LED  1
-        { 62, 29}, // LED  2
-        { 50, 25}, // LED  3
-        { 37, 29}, // LED  4
-        {212, 22}, // LED  5
-        {  0, 36}, // LED  6
-        { 12, 35}, // LED  7
-        { 25, 35}, // LED  8
-        {187, 16}, // LED  9
-        {174, 13}, // LED 10
-        {162, 16}, // LED 11
-        {149, 17}, // LED 12
-        {199, 22}, // LED 13
-        { 37, 16}, // LED 14
-        { 50, 13}, // LED 15
-        { 62, 16}, // LED 16
-        { 75, 17}, // LED 17
-        { 25, 22}, // LED 18
-        {212, 10}, // LED 19
-        {199, 10}, // LED 20
-        {187,  3}, // LED 21
-        {174,  0}, // LED 22
-        { 12, 22}, // LED 23
-        { 62,  3}, // LED 24
-        { 75,  4}, // LED 25
-        {149,  4}, // LED 26
-        {162,  3}, // LED 27
-        { 12, 10}, // LED 28
-        { 50,  0}, // LED 29
-        { 25, 10}, // LED 30
-        { 37,  3}, // LED 31
-        {174, 25}, // LED 32
-        {187, 29}, // LED 33
-        {162, 29}, // LED 34
-        {199, 35}, // LED 35
-        { 87, 47}, // LED 36
-        {212, 35}, // LED 37
-        {224, 36}, // LED 38
-        { 12, 48}, // LED 39
-        { 25, 48}, // LED 40
-        {100, 51}, // LED 41
-        { 75, 42}, // LED 42
-        { 62, 41}, // LED 43
-        { 50, 38}, // LED 44
-        { 37, 41}, // LED 45
-        { 42, 58}, // LED 46
-        {124, 51}, // LED 47
-        {137, 47}, // LED 48
-        {149, 42}, // LED 49
-        {162, 41}, // LED 50
-        {212, 48}, // LED 51
-        {199, 48}, // LED 52
-        {187, 41}, // LED 53
-        {174, 38}, // LED 54
-        { 57, 56}, // LED 55
-        { 72, 56}, // LED 56
-        { 87, 60}, // LED 57
-        {100, 64}, // LED 58
-        {167, 56}, // LED 59
-        {152, 56}, // LED 60
-        {137, 60}, // LED 61
-        {124, 64}, // LED 62
-        {182, 58}, // LED 63
+        { 84, 58}, // LED  0
+        { 98, 64}, // LED  1
+        { 106, 54}, // LED  2
+        { 90, 46}, // LED  3
+        { 72, 39}, // LED  4
+        { 72, 27}, // LED  5
+        { 72, 15}, // LED  6
+        { 72,  3}, // LED  7
+        { 60,  1}, // LED  8
+        { 60, 13}, // LED  9
+        { 60, 15}, // LED 10
+        { 60, 27}, // LED 11
+        { 68, 52}, // LED 12
+        { 56, 49}, // LED 13
+        { 48, 36}, // LED 14
+        { 48, 24}, // LED 15
+        { 48, 12}, // LED 16
+        { 48,  0}, // LED 17
+        { 36,  1}, // LED 18
+        { 36, 13}, // LED 19
+        { 36, 25}, // LED 20
+        { 36, 37}, // LED 21
+        { 42, 49}, // LED 22
+        { 24, 40}, // LED 23
+        { 24, 28}, // LED 24
+        { 24, 16}, // LED 25
+        { 24,  4}, // LED 26
+        { 12,  4}, // LED 27
+        { 12, 16}, // LED 28
+        { 12, 28}, // LED 29
+        { 12, 40}, // LED 30
+        { 00, 28}, // LED 31
+
+        //Direito
+        {140, 58}, // LED 32
+        {126, 64}, // LED 33
+        {118, 54}, // LED 34
+        {134, 46}, // LED 35
+        {152, 39}, // LED 36
+        {152, 27}, // LED 37
+        {152, 15}, // LED 38
+        {152,  3}, // LED 39
+        {164,  1}, // LED 40
+        {164, 13}, // LED 41
+        {164, 15}, // LED 42
+        {164, 27}, // LED 43
+        {156, 52}, // LED 44
+        {168, 49}, // LED 45
+        {176, 36}, // LED 46
+        {176, 24}, // LED 47
+        {176, 12}, // LED 48
+        {176,  0}, // LED 49
+        {188,  1}, // LED 50
+        {188, 13}, // LED 51
+        {188, 25}, // LED 52
+        {188, 37}, // LED 53
+        {180, 49}, // LED 54
+        {200, 40}, // LED 55
+        {200, 28}, // LED 56
+        {200, 16}, // LED 57
+        {200,  4}, // LED 58
+        {212,  4}, // LED 59
+        {212, 16}, // LED 60
+        {212, 28}, // LED 61
+        {212, 40}, // LED 62
+        {224, 28}, // LED 63
     },
     { // Flags: 4 = LED_FLAG_KEYLIGHT (per-key)
-      //1  2  3  4  5  6  7
         4, 4, 4, 4, 4, 4,
         4, 4, 4, 4, 4, 4,
         4, 4, 4, 4, 4, 4, 4, 
@@ -156,7 +157,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 #if defined(ENCODER_MAP_ENABLE)
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
-    [0] =   { ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(KC_PGUP, KC_PGDN)  },
+    [0] =   { ENCODER_CCW_CW(KC_VOLD, KC_VOLU),           ENCODER_CCW_CW(KC_PGUP, KC_PGDN)  },
     [1] =   { ENCODER_CCW_CW(RGB_HUD, RGB_HUI),           ENCODER_CCW_CW(RGB_SAD, RGB_SAI)  },
     [2] =   { ENCODER_CCW_CW(RGB_VAD, RGB_VAI),           ENCODER_CCW_CW(RGB_SPD, RGB_SPI)  },
     //                  Encoder 1                                     Encoder 2
@@ -172,9 +173,9 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
 static uint8_t led_for_key(uint8_t row, uint8_t col) {
     uint8_t led = g_led_config.matrix_co[row][col];
     //imprime teste
-    char buf[16];
-    snprintf(buf, sizeof(buf), "%d, %d, %d\n", row, col, led);
-    oled_write(buf, false);
+    //char buf[16];
+    //snprintf(buf, sizeof(buf), "%d, %d, %d\n", row, col, led);
+    //oled_write(buf, false);
     return led;
 }
 
@@ -192,6 +193,10 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
         for (uint8_t col = 0; col < MATRIX_COLS; col++) {
             if (matrix_is_on(row, col)) {
                 uint8_t led = led_for_key(row, col);
+                //imprime teste
+                char buf[16];
+                snprintf(buf, sizeof(buf), "%d, %d, %d\n", led_min, led_max, led);
+                oled_write(buf, false);
                 if (led != 255 && led >= led_min && led < led_max) {
                     rgb_matrix_set_color(led, RGB_WHITE);
                 }
@@ -213,12 +218,6 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
                 if (led != 255 && led >= led_min && led < led_max) {
                     // Só pinta se não está pressionada (preserva o branco)
                     if (!matrix_is_on(row, col)) {
-
-                        //imprime teste
-                        char buf[16];
-                        snprintf(buf, sizeof(buf), "%d, %d, %d\n", row, col, led);
-                        oled_write(buf, false);
-
                         rgb_matrix_set_color(led, color.r, color.g, color.b);
                     }
                 }
