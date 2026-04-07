@@ -63,6 +63,8 @@ This can also be used to control which fork is used, though only upstream `qmk_f
 ## rules.mk
 
 ```
+CONVERT_TO = rp2040_ce
+
 RGB_MATRIX_ENABLE = yes
 RGB_MATRIX_DRIVER = ws2812
 VIALRGB_ENABLE = yes

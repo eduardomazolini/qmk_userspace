@@ -211,11 +211,20 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     uint8_t layer = get_highest_layer(layer_state);
     if (layer == LAYER_0) return false;
 
-    RGB color = (layer == LAYER_1) ? (RGB){RGB_GREEN} : (RGB){RGB_BLUE};
+    RGB layer_color = (layer == LAYER_1) ? (RGB){RGB_GREEN} : (RGB){RGB_BLUE};
+    RGB arrow_color = (RGB){RGB_RED};
+    RGB color = layer_color;
 
-    for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
+
+       for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
         for (uint8_t col = 0; col < MATRIX_COLS; col++) {
             uint16_t kc = keymap_key_to_keycode(layer, (keypos_t){col, row});
+            if (kc == KC_UP || kc == KC_DOWN || kc == KC_LEFT || kc == KC_RIGHT){
+                color = arrow_color;
+            } else {
+                color = layer_color;
+            }
+
             if (kc != KC_TRNS && kc != KC_NO) {
                 uint8_t led = led_for_key(row, col);
                 if (led != 255 && led >= led_min && led < led_max) {
