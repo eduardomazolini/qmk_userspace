@@ -17,6 +17,22 @@ static bool in_list_impl(uint8_t val, const uint8_t *list, uint8_t len) {
 static bool MY_COOL_EFFECT(effect_params_t* params) {
     RGB_MATRIX_USE_LIMITS(led_min, led_max);
 
+    static const uint8_t H_BLUE = 240;
+    static const uint8_t H_YELLOW = 60;
+    static const uint8_t H_ORANGE = 30;
+    static const uint8_t H_RED = 0;
+    static const uint8_t H_GREEN = 120;
+
+    uint8_t s = rgb_matrix_config.s; //rgb_matrix_get_sat()
+    uint8_t v = rgb_matrix_config.v; //rgb_matrix_get_val()
+    uint8_t h = rgb_matrix_config.hsv.h; //rgb_matrix_get_hue() rgb_matrix_get_hsv()
+
+    rgb_t rgb_blue_base = rgb_matrix_hsv_to_rgb(H_BLUE + h, s, v);
+    rgb_t rgb_yellow_base = rgb_matrix_hsv_to_rgb(H_YELLOW + h, s, v);
+    rgb_t rgb_orange_base = rgb_matrix_hsv_to_rgb(H_ORANGE + h, s, v);
+    rgb_t rgb_red_base = rgb_matrix_hsv_to_rgb(H_RED + h, s, v);
+    rgb_t rgb_green_base = rgb_matrix_hsv_to_rgb(H_GREEN + h, s, v);
+
     static const uint8_t blue_list[]   = { 2,  3, 34, 35,  4,  5,  6,  7,  8,  9, 10, 11, 36, 37, 38, 39, 40, 41, 42, 43};
     static const uint8_t yellow_list[] = {14, 15, 16, 17, 46, 47, 48, 49};
     static const uint8_t orange_list[] = {18, 19, 20, 21, 50, 51, 52, 53};
@@ -25,11 +41,11 @@ static bool MY_COOL_EFFECT(effect_params_t* params) {
 
     for (uint8_t i = led_min; i < led_max; i++) {
         RGB_MATRIX_TEST_LED_FLAGS();
-        if      (IN_LIST(i, blue_list))   rgb_matrix_set_color(i, RGB_BLUE);
-        else if (IN_LIST(i, yellow_list)) rgb_matrix_set_color(i, RGB_YELLOW);
-        else if (IN_LIST(i, orange_list)) rgb_matrix_set_color(i, RGB_ORANGE);
-        else if (IN_LIST(i, red_list))    rgb_matrix_set_color(i, RGB_RED);
-        else if (IN_LIST(i, green_list))  rgb_matrix_set_color(i, RGB_GREEN);
+        if      (IN_LIST(i, blue_list))   rgb_matrix_set_color(i, rgb_blue_base);
+        else if (IN_LIST(i, yellow_list)) rgb_matrix_set_color(i, rgb_yellow_base);
+        else if (IN_LIST(i, orange_list)) rgb_matrix_set_color(i, rgb_orange_base);
+        else if (IN_LIST(i, red_list))    rgb_matrix_set_color(i, rgb_red_base);
+        else if (IN_LIST(i, green_list))  rgb_matrix_set_color(i, rgb_green_base);
         else                              rgb_matrix_set_color(i, RGB_WHITE);
     }
 
