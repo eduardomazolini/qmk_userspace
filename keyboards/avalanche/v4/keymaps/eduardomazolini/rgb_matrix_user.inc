@@ -17,9 +17,9 @@ static bool in_list_impl(uint8_t val, const uint8_t *list, uint8_t len) {
 static bool MY_COOL_EFFECT(effect_params_t* params) {
     RGB_MATRIX_USE_LIMITS(led_min, led_max);
 
-    static const uint8_t H_BLUE = 240; //160
-    static const uint8_t H_YELLOW = 60; //43
-    static const uint8_t H_ORANGE = 30; //28
+    static const uint8_t H_BLUE = 240; //171
+    static const uint8_t H_YELLOW = 60; //128
+    static const uint8_t H_ORANGE = 30; //43
     static const uint8_t H_RED = 0;
     static const uint8_t H_GREEN = 120; //85
 
