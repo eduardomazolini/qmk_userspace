@@ -193,3 +193,33 @@ x = 224 118
 - Efeito "Direct Control" não funciona.
 - CAPS-LOCK INVERTE
 - acentos ficam em maiúscula
+
+# Comandos
+
+Ativar o uso do vial criando regra udev coomo o app do vial indica.
+```
+export USER_GID=`id -g`; sudo --preserve-env=USER_GID sh -c 'echo "KERNEL==\"hidraw*\", SUBSYSTEM==\"hidraw\", ATTRS{serial}==\"*vial:f64c2b3c*\", MODE=\"0660\", GROUP=\"$USER_GID\", TAG+=\"uaccess\", TAG+=\"udev-acl\"" > /etc/udev/rules.d/59-vial.rules && udevadm control --reload && udevadm trigger'
+```
+
+Clonar os repositórios:
+```
+git clone git@github.com:eduardomazolini/qmk_userspace.git
+git clone git@github.com:vial-kb/vial-qmk.git
+```
+
+Configurar o QMK
+```
+cd vial-qmk/
+sudo cp /home/emazolini/vial-qmk/util/udev/50-qmk.rules /etc/udev/rules.d/
+curl -fsSL https://install.qmk.fm | sh
+qmk config user.qmk_home=/home/emazolini/vial-qmk
+cat ~/.config/qmk/qmk.ini
+qmk setup
+```
+
+
+```
+qmk compile -kb avalanche/v4 -km eduardomazolini
+qmk userspace-add -kb avalanche/v4 -km eduardomazolini
+qmk userspace-compile
+```
