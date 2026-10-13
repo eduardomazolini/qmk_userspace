@@ -27,3 +27,11 @@ RGB_MATRIX_DRIVER = ws2812
 VIALRGB_ENABLE = yes
 
 RGB_MATRIX_CUSTOM_USER = yes
+
+# Firmware fixo por lado: qmk compile -e LADO=esquerdo  /  -e LADO=direito
+ifeq ($(strip $(LADO)), esquerdo)
+    OPT_DEFS += -DLADO_ESQUERDO
+endif
+ifeq ($(strip $(LADO)), direito)
+    OPT_DEFS += -DLADO_DIREITO
+endif
