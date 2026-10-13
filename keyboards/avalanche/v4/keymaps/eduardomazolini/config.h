@@ -3,6 +3,10 @@
 
 #define SPLIT_USB_DETECT
 #define SPLIT_USB_TIMEOUT 2500
+// Volta da suspensão: se a metade com o cabo virar "escrava" por engano (PC demorou a falar),
+// o watchdog a reinicia e ela tenta detectar a USB de novo (13/10/2026)
+#define SPLIT_WATCHDOG_ENABLE
+#define USB_SUSPEND_WAKEUP_DELAY 200
 
 #pragma once
 

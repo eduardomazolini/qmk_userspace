@@ -241,3 +241,30 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     return false;
 }
 
+
+// ──────────────────────────────────────────────
+// Firmware fixo por lado (13/10/2026)
+// Compilar com: qmk compile -e LADO=esquerdo   ou   -e LADO=direito
+// O cabo USB fica sempre na esquerda: ela é sempre a mestre e a direita sempre a escrava.
+// Assim nenhuma metade precisa "esperar o PC" (SPLIT_USB_DETECT) para decidir, o que
+// falhava na volta da suspensão. Sem LADO, vale a detecção automática de sempre.
+// ──────────────────────────────────────────────
+#if defined(LADO_ESQUERDO) || defined(LADO_DIREITO)
+#    include "usb_util.h"
+bool is_keyboard_master_impl(void) {
+#    ifdef LADO_ESQUERDO
+    return true;
+#    else
+    usb_disconnect();
+    return false;
+#    endif
+}
+
+bool is_keyboard_left_impl(void) {
+#    ifdef LADO_ESQUERDO
+    return true;
+#    else
+    return false;
+#    endif
+}
+#endif
