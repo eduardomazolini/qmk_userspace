@@ -1,5 +1,8 @@
 # QMK Userspace
 
+> **Recuperar o mapa do Vial depois de gravar um firmware:** veja [`recuperar-vial/`](recuperar-vial/README.md).
+> Todo firmware recompilado zera o que foi feito pelo Vial; salve um `.vil` antes de gravar.
+
 This is a template repository which allows for an external set of QMK keymaps to be defined and compiled. This is useful for users who want to maintain their own keymaps without having to fork the [main QMK repository](https://github.com/qmk/qmk_firmware). You must still fork the main QMK repository if writing firmware for a *new* keyboard.
 
 ## Howto configure your build targets
